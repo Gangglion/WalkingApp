@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:flutter_kakao_map/flutter_kakao_map.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart';
-
 class MainSceen extends StatefulWidget {
   const MainSceen({Key? key}) : super(key: key);
 
@@ -12,18 +8,6 @@ class MainSceen extends StatefulWidget {
 }
 
 class _MainSceenState extends State<MainSceen> {
-  late KakaoMapController mapController;
-  MapPoint _visibleRegion = MapPoint(37.5087553, 127.0632877);
-  CameraPosition _kInitialPosition =
-      CameraPosition(target: MapPoint(37.5087553, 127.0632877), zoom: 5);
-  void onMapCreated(KakaoMapController controller) async {
-    final MapPoint visibleRegion = await controller.getMapCenterPoint();
-    setState(() {
-      mapController = controller;
-      _visibleRegion = visibleRegion;
-    });
-  }
-
   int _selectedIndex = 0;
   void _onBotItemTapped(int index) {
     setState(() => _selectedIndex = index);
@@ -33,14 +17,7 @@ class _MainSceenState extends State<MainSceen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: <Widget>[
-          Container(
-            width: 500,
-            height: 350,
-            margin: const EdgeInsets.only(left: 10, top: 10, right: 10),
-            child: KakaoMap(initialCameraPosition: _kInitialPosition,onMapCreated: onMapCreated,)
-          )
-        ],
+        children: <Widget>[],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [

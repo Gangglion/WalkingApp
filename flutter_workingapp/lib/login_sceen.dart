@@ -4,11 +4,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_workingapp/main_sceen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const login_App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class login_App extends StatelessWidget {
+  const login_App({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override

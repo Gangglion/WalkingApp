@@ -5,7 +5,8 @@
    <application
         android:label="함께걸어요"
         android:name="${applicationName}"
-        android:icon="@mipmap/walkingapp_icon">
+        android:icon="@mipmap/walkingapp_icon"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -32,8 +33,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <meta-data
-            android:name="com.kakao.sdk.Appkey"
-            android:value="5a24f30e034a8458ba5194584230e29d"/>
     </application>
 </manifest>
