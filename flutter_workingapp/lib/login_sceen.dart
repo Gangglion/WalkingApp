@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_workingapp/main_sceen.dart';
+import 'package:flutter_workingapp/pages/walk_page.dart';
 
 void main() {
   runApp(const login_App());
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
               // 메인 화면으로 넘어감
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const MainSceen()),
+                MaterialPageRoute(builder: (context) => const WalkSceen()),
               );
             },
             style: ElevatedButton.styleFrom(
