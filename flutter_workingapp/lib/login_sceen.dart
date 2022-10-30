@@ -1,16 +1,20 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_workingapp/pages/walk_page.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-void main() {
+import 'firebase_options.dart';
+import 'home_page.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const login_App());
 }
 
 class login_App extends StatelessWidget {
   const login_App({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,11 +36,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String _id = "temp";
-  String _pw = "";
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  void _login() {
-    setState(() {});
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   @override
@@ -72,8 +87,20 @@ class _LoginPageState extends State<LoginPage> {
           margin: const EdgeInsets.only(top: 120),
           child: ElevatedButton(
               onPressed: () {
-                // 구글 로그인 화면 띄워줌
-                print("구글 로그인 화면 띄워줌");
+                FirebaseAuth.instance.authStateChanges().listen((User? user) {
+                  if (user == null) {
+                    // 유저 정보가 없으면 로그인 시도
+                    print("유저정보없음");
+                    // signInWithGoogle();
+                  } else {
+                    // 있으면 다음 화면으로 이동
+                    print("유저정보있음");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  }
+                });
               },
               style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder(
@@ -91,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
               // 메인 화면으로 넘어감
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const WalkSceen()),
+                MaterialPageRoute(builder: (context) => const HomePage()),
               );
             },
             style: ElevatedButton.styleFrom(
