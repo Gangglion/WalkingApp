@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert' show json;
+import 'OutlineCircleButton .dart';
 import 'firebase_options.dart';
 import 'home_page.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+void main() {
   runApp(const login_App());
 }
 
@@ -81,33 +81,40 @@ class _LoginPageState extends State<LoginPage> {
             child: Text("로그인 하고 활동을 기록하세요!",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20, color: Colors.teal.shade600))),
-        Container(
-          width: 200,
-          height: 55,
-          margin: const EdgeInsets.only(top: 120),
-          child: ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                  if (user == null) {
-                    // 유저 정보가 없으면 로그인 시도
-                    print("유저정보없음");
-                    // signInWithGoogle();
-                  } else {
-                    // 있으면 다음 화면으로 이동
-                    print("유저정보있음");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  }
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  primary: Colors.blue.shade100),
-              child: const Text("구글 아이디로 로그인하기",
-                  style: TextStyle(color: Colors.black87))),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 150, right: 20),
+              child: OutlineCircleButton(
+                  radius: 60.0,
+                  borderSize: 0.5,
+                  onTap: () async {
+                    print("구글 로그인");
+                  },
+                  child: Image.asset("images/icon/google.png")),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 150, right: 20),
+              child: OutlineCircleButton(
+                  radius: 60.0,
+                  borderSize: 0.5,
+                  onTap: () async {
+                    print("네이버 로그인");
+                  },
+                  child: Image.asset("images/icon/naver.png")),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 150),
+              child: OutlineCircleButton(
+                  radius: 60.0,
+                  borderSize: 0.5,
+                  onTap: () async {
+                    print("카카오 로그인");
+                  },
+                  child: Image.asset("images/icon/kakao.png")),
+            ),
+          ],
         ),
         Container(
           width: 200,
@@ -124,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
             style: ElevatedButton.styleFrom(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
-                primary: Colors.blue.shade100),
+                backgroundColor: Colors.blue.shade100),
             child: const Text("로그인 없이 바로 시작하기!",
                 style: TextStyle(color: Colors.black87)),
           ),

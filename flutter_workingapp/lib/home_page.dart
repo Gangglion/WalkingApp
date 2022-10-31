@@ -14,9 +14,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static List<Widget> pages = <Widget>[
-    BadgeSceen(),
-    WalkSceen(),
-    StatusSceen()
+    const BadgeSceen(),
+    const WalkSceen(),
+    const StatusSceen()
   ];
   int _selectedIndex = 1;
 

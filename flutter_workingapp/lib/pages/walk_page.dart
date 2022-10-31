@@ -55,7 +55,7 @@ class _WalkSceenState extends State<WalkSceen> {
                         shape: const RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(40))),
-                        primary: Colors.blue.shade100),
+                        backgroundColor: Colors.blue.shade100),
                     child: const Text("걸음수 지정 산책 모드",
                         style: TextStyle(color: Colors.black87))),
               ),
@@ -73,7 +73,7 @@ class _WalkSceenState extends State<WalkSceen> {
                         shape: const RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(40))),
-                        primary: Colors.blue.shade100),
+                        backgroundColor: Colors.blue.shade100),
                     child: const Text("가벼운 산책 모드",
                         style: TextStyle(color: Colors.black87))),
               )
