@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
             style: ElevatedButton.styleFrom(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
-                backgroundColor: Colors.blue.shade100),
+                primary: Colors.blue.shade100),
             child: const Text("로그인 없이 바로 시작하기!",
                 style: TextStyle(color: Colors.black87)),
           ),

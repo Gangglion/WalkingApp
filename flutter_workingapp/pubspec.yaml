@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^4.1.0
   google_sign_in: ^5.4.2
   http: ^0.13.5
+  flutter_naver_login: ^1.7.0
 
 dev_dependencies:
   flutter_test:

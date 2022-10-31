@@ -47,7 +47,7 @@ class _WalkSceenState extends State<WalkSceen> {
                         AppBar().preferredSize.height -
                         MediaQuery.of(context).padding.top) *
                     0.1,
-                margin: const EdgeInsets.only(left:3.0,top:10.0,right:3.0),
+                margin: const EdgeInsets.only(left: 3.0, top: 10.0, right: 3.0),
                 child: ElevatedButton(
                     // 이미지 있는 버튼으로 변경
                     onPressed: () => print("걸음수 지정 산책 모드 클릭"),
@@ -55,7 +55,7 @@ class _WalkSceenState extends State<WalkSceen> {
                         shape: const RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(40))),
-                        backgroundColor: Colors.blue.shade100),
+                        primary: Colors.blue.shade100),
                     child: const Text("걸음수 지정 산책 모드",
                         style: TextStyle(color: Colors.black87))),
               ),
@@ -65,7 +65,7 @@ class _WalkSceenState extends State<WalkSceen> {
                         AppBar().preferredSize.height -
                         MediaQuery.of(context).padding.top) *
                     0.1,
-                margin: const EdgeInsets.only(left:3.0,top:10.0,right:3.0),
+                margin: const EdgeInsets.only(left: 3.0, top: 10.0, right: 3.0),
                 child: ElevatedButton(
                     // 이미지 있는 버튼으로 변경
                     onPressed: () => print("가벼운 산책 모드 클릭"),
@@ -73,7 +73,7 @@ class _WalkSceenState extends State<WalkSceen> {
                         shape: const RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(40))),
-                        backgroundColor: Colors.blue.shade100),
+                        primary: Colors.blue.shade100),
                     child: const Text("가벼운 산책 모드",
                         style: TextStyle(color: Colors.black87))),
               )
