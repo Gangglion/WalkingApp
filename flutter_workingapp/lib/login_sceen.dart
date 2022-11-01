@@ -1,19 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' show json;
 import 'OutlineCircleButton .dart';
-import 'firebase_options.dart';
 import 'home_page.dart';
+import 'login_platform.dart';
+import 'dart:convert';
+import 'dart:io';
 
 void main() {
-  runApp(const login_App());
+  runApp(const AppStart());
 }
 
-class login_App extends StatelessWidget {
-  const login_App({Key? key}) : super(key: key);
+class AppStart extends StatelessWidget {
+  const AppStart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,24 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // 로그인한 플랫폼 저장 enum
+  LoginPlatform _loginPlatform = LoginPlatform.none;
+  // 네이버 로그인 처리하는 함수
+  void signInWithNaver() async {
+    final NaverLoginResult result = await FlutterNaverLogin.logIn();
+    if (result.status == NaverLoginStatus.loggedIn) {
+      print('accessToken = ${result.accessToken}');
+      print('id = ${result.account.id}');
+      print('email = ${result.account.email}');
+      print('name = ${result.account.name}');
+
+      setState(() {
+        _loginPlatform = LoginPlatform.naver;
+      });
+    }
+  }
+
+  // 구글 로그인 관련
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -101,6 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                   borderSize: 0.5,
                   onTap: () async {
                     print("네이버 로그인");
+                    signInWithNaver();
                   },
                   child: Image.asset("images/icon/naver.png")),
             ),
@@ -138,5 +158,24 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ],
     ));
+  }
+
+  Widget _naverLoginBtn(String path, VoidCallback onTab) {
+    return Card(
+      elevation: 5.0,
+      shape: const CircleBorder(),
+      clipBehavior: Clip.antiAlias,
+      child: Ink.image(
+        image: AssetImage('images/icon/$path.png'),
+        width: 60,
+        height: 60,
+        child: InkWell(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(35.0),
+          ),
+          onTap: onTab,
+        ),
+      ),
+    );
   }
 }
