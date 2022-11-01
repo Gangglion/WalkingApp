@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'OutlineCircleButton .dart';
 import 'home_page.dart';
-import 'login_platform.dart';
+import 'package:flutter_workingapp/login_platform.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -38,7 +38,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // 로그인한 플랫폼 저장 enum
-  LoginPlatform _loginPlatform = LoginPlatform.none;
+  LoginPlatform loginPlatform = LoginPlatform.none;
   // 네이버 로그인 처리하는 함수
   void signInWithNaver() async {
     final NaverLoginResult result = await FlutterNaverLogin.logIn();
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
       print('name = ${result.account.name}');
 
       setState(() {
-        _loginPlatform = LoginPlatform.naver;
+        loginPlatform = LoginPlatform.naver;
       });
     }
   }
@@ -68,7 +68,9 @@ class _LoginPageState extends State<LoginPage> {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-
+    setState(() {
+      loginPlatform = LoginPlatform.google;
+    });
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
@@ -110,6 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                   borderSize: 0.5,
                   onTap: () async {
                     print("구글 로그인");
+                    signInWithGoogle();
                   },
                   child: Image.asset("images/icon/google.png")),
             ),
@@ -158,24 +161,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ],
     ));
-  }
-
-  Widget _naverLoginBtn(String path, VoidCallback onTab) {
-    return Card(
-      elevation: 5.0,
-      shape: const CircleBorder(),
-      clipBehavior: Clip.antiAlias,
-      child: Ink.image(
-        image: AssetImage('images/icon/$path.png'),
-        width: 60,
-        height: 60,
-        child: InkWell(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(35.0),
-          ),
-          onTap: onTab,
-        ),
-      ),
-    );
   }
 }
