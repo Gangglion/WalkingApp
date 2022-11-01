@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:flutter_workingapp/class/login_class.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
-import 'OutlineCircleButton .dart';
+import 'widget/OutlineCircleButton.dart';
 import 'home_page.dart';
 import 'package:flutter_workingapp/login_platform.dart';
 import 'dart:convert';
@@ -39,40 +40,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   // 로그인한 플랫폼 저장 enum
   LoginPlatform loginPlatform = LoginPlatform.none;
-  // 네이버 로그인 처리하는 함수
-  void signInWithNaver() async {
-    final NaverLoginResult result = await FlutterNaverLogin.logIn();
-    if (result.status == NaverLoginStatus.loggedIn) {
-      print('accessToken = ${result.accessToken}');
-      print('id = ${result.account.id}');
-      print('email = ${result.account.email}');
-      print('name = ${result.account.name}');
-
-      setState(() {
-        loginPlatform = LoginPlatform.naver;
-      });
-    }
-  }
-
-  // 구글 로그인 관련
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    setState(() {
-      loginPlatform = LoginPlatform.google;
-    });
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+  // 로그인 관련 클래스 생성
+  LoginClass loginObj = LoginClass();
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -112,7 +84,10 @@ class _LoginPageState extends State<LoginPage> {
                   borderSize: 0.5,
                   onTap: () async {
                     print("구글 로그인");
-                    signInWithGoogle();
+                    loginObj.signInWithGoogle();
+                    setState(() {
+                      loginPlatform = LoginPlatform.google;
+                    });
                   },
                   child: Image.asset("images/icon/google.png")),
             ),
@@ -123,7 +98,10 @@ class _LoginPageState extends State<LoginPage> {
                   borderSize: 0.5,
                   onTap: () async {
                     print("네이버 로그인");
-                    signInWithNaver();
+                    loginObj.signInWithNaver();
+                    setState(() {
+                      loginPlatform = LoginPlatform.naver;
+                    });
                   },
                   child: Image.asset("images/icon/naver.png")),
             ),
