@@ -4,6 +4,8 @@ import 'package:flutter_workingapp/login_platform.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginClass {
+  bool checkLogin = false;
+
   LoginClass();
 
   // 구글 로그인 관련
@@ -36,11 +38,12 @@ class LoginClass {
   }
 
   // 로그인 상태 체크
-  _auth(LoginPlatform loginPlatform) {
+  auth(LoginPlatform loginPlatform) {
     // 사용자 인증정보 확인. 딜레이를 두어 확인
     Future.delayed(const Duration(milliseconds: 100), () {
       switch (loginPlatform) {
         case LoginPlatform.google:
+
           // 구글 로그인 확인 후 리턴
           break;
         case LoginPlatform.naver:
@@ -51,6 +54,7 @@ class LoginClass {
           break;
         case LoginPlatform.none:
           // 로그인 하라는 토스트 같은 메시지 띄우기
+
           break;
       }
       // if (FirebaseAuth.instance.currentUser == null) {
