@@ -4,7 +4,7 @@ import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_workingapp/class/login_class.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
-import 'widget/OutlineCircleButton.dart';
+import 'widget/outline_circle_button.dart';
 import 'home_page.dart';
 import 'package:flutter_workingapp/login_platform.dart';
 import 'dart:convert';

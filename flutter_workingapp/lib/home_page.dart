@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_workingapp/pages/badge_page.dart';
 import 'package:flutter_workingapp/pages/status_page.dart';
 import 'package:flutter_workingapp/pages/walk_page.dart';
+import 'package:flutter_workingapp/widget/navigation_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.teal.shade300,
         onTap: _onBotItemTapped,
       ),
+      drawer: const NavigationDrawer(),
     );
   }
 }

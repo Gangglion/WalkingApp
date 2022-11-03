@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 
 class BadgeSceen extends StatelessWidget {
   const BadgeSceen({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          children: [
-            Container(child: Text('뱃지화면'),)
-          ],
-        ),
-      )
-    );
+        appBar: AppBar(),
+        body: Center(
+          child: Column(
+            children: [
+              Container(
+                child: const Text('뱃지화면'),
+              )
+            ],
+          ),
+        ));
   }
 }

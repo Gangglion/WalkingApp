@@ -29,7 +29,7 @@ class _WalkSceenState extends State<WalkSceen> {
             height: (MediaQuery.of(context).size.height -
                     AppBar().preferredSize.height -
                     MediaQuery.of(context).padding.top) *
-                0.5,
+                0.6,
             margin: const EdgeInsets.all(10),
             child: GoogleMap(
               onMapCreated: _onMapCreated,
@@ -40,13 +40,14 @@ class _WalkSceenState extends State<WalkSceen> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 30,
+                width: 80,
                 height: (MediaQuery.of(context).size.height -
                         AppBar().preferredSize.height -
                         MediaQuery.of(context).padding.top) *
-                    0.1,
+                    0.2,
                 margin: const EdgeInsets.only(left: 3.0, top: 10.0, right: 3.0),
                 child: ElevatedButton(
                     // 이미지 있는 버튼으로 변경
@@ -60,11 +61,11 @@ class _WalkSceenState extends State<WalkSceen> {
                         style: TextStyle(color: Colors.black87))),
               ),
               Container(
-                width: 30,
+                width: 80,
                 height: (MediaQuery.of(context).size.height -
                         AppBar().preferredSize.height -
                         MediaQuery.of(context).padding.top) *
-                    0.1,
+                    0.2,
                 margin: const EdgeInsets.only(left: 3.0, top: 10.0, right: 3.0),
                 child: ElevatedButton(
                     // 이미지 있는 버튼으로 변경
