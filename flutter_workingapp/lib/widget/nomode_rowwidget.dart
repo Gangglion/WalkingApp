@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class NoModRow extends StatelessWidget {
+class NoModRow extends StatefulWidget {
   const NoModRow({super.key});
 
+  @override
+  State<NoModRow> createState() => _NoModRowState();
+}
+
+class _NoModRowState extends State<NoModRow> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -17,7 +22,9 @@ class NoModRow extends StatelessWidget {
           margin: const EdgeInsets.only(top: 15.0, right: 25.0),
           child: ElevatedButton(
               // 이미지 있는 버튼으로 변경
-              onPressed: () => print("걸음수 지정 산책 모드 클릭"),
+              onPressed: () {
+                print("걸음수 지정 산책 모드 클릭");
+              },
               style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(40))),
