@@ -110,5 +110,14 @@
         </dict>
     </dict>
 	<!-- 추가한 부분 -->
+
+   <!--Pedometer-->
+   <key>NSMotionUsageDescription</key>
+<string>This application tracks your steps</string>
+<key>UIBackgroundModes</key>
+<array>
+    <string>processing</string>
+    <!--Pedometer-->
+</array>
 </dict>
 </plist>

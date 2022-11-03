@@ -7,36 +7,34 @@ class BadgeSceen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              for (int i = 0; i < 5; i++) ...[
-                Column(
+      child: Column(
+        children: [
+          for (int i = 0; i < 5; i++) ...[
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (int j = 0; j < 3; j++) ...[
-                          Container(
-                            height: 130,
-                            width: 130,
-                            margin:
-                                const EdgeInsets.only(top: 20.0, bottom: 10),
-                            child: const Card(
-                              shape: CircleBorder(side: BorderSide(width: 5.0)),
-                              elevation: 4.0,
-                              color: Colors.black26,
-                            ),
-                          ),
-                        ]
-                      ],
-                    )
+                    for (int j = 0; j < 3; j++) ...[
+                      Container(
+                        height: 130,
+                        width: 130,
+                        margin: const EdgeInsets.only(top: 20.0, bottom: 10),
+                        child: const Card(
+                          shape: CircleBorder(side: BorderSide(width: 5.0)),
+                          elevation: 4.0,
+                          color: Colors.black26,
+                        ),
+                      ),
+                    ]
                   ],
                 )
-              ]
-            ],
-          ),
-        ));
+              ],
+            )
+          ]
+        ],
+      ),
+    ));
   }
 }

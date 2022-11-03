@@ -14,7 +14,7 @@ class _WalkSceenState extends State<WalkSceen> {
   late GoogleMapController mapController;
 
   final LatLng _center = const LatLng(45.521563, -122.677433);
-
+  int walkMode = 0; // 1은 걸음수 지정 산책 모드, 2는 일반 산책 모드
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
@@ -39,6 +39,7 @@ class _WalkSceenState extends State<WalkSceen> {
               ),
             ),
           ),
+          if (walkMode == 0) ...[] else if (walkMode == 1) ...[],
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -48,7 +49,7 @@ class _WalkSceenState extends State<WalkSceen> {
                         AppBar().preferredSize.height -
                         MediaQuery.of(context).padding.top) *
                     0.2,
-                margin: const EdgeInsets.only(top: 75.0, right: 25.0),
+                margin: const EdgeInsets.only(top: 15.0, right: 25.0),
                 child: ElevatedButton(
                     // 이미지 있는 버튼으로 변경
                     onPressed: () => print("걸음수 지정 산책 모드 클릭"),
@@ -66,10 +67,15 @@ class _WalkSceenState extends State<WalkSceen> {
                         AppBar().preferredSize.height -
                         MediaQuery.of(context).padding.top) *
                     0.2,
-                margin: const EdgeInsets.only(left: 25.0, top: 75.0),
+                margin: const EdgeInsets.only(left: 25.0, top: 15.0),
                 child: ElevatedButton(
                     // 이미지 있는 버튼으로 변경
-                    onPressed: () => print("가벼운 산책 모드 클릭"),
+                    onPressed: () {
+                      print("가벼운 산책 모드 클릭");
+                      setState(() {
+                        walkMode = 2;
+                      });
+                    },
                     style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(
                             borderRadius:

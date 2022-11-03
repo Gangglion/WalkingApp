@@ -8,7 +8,7 @@
             "name": "flutter_workingapp",
             "request": "launch",
             "type": "dart",
-            "program":"lib/login_sceen.dart"
+            "program":"lib/pages/login_page.dart"
         },
         {
             "name": "flutter_workingapp (profile mode)",
