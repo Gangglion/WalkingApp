@@ -15,7 +15,8 @@ class _JustWalkModeState extends State<JustWalkMode> {
     super.initState();
     print('justWalkMode 진입');
     pedometer_c.initPlatformState();
-    pedometer_c.status = 'walking';
+    String nowStatus = pedometer_c.status;
+    print('현재 상태 : $nowStatus');
   }
 
   @override

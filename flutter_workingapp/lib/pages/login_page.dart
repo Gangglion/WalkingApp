@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_workingapp/class/login_class.dart';
+import 'package:flutter_workingapp/pages/pedometer_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import '../widget/outline_circle_button.dart';
@@ -11,7 +12,7 @@ import 'dart:convert';
 import 'dart:io';
 
 void main() {
-  runApp(const AppStart());
+  runApp(MyApp());
 }
 
 class AppStart extends StatelessWidget {

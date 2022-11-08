@@ -41,6 +41,8 @@ dependencies:
   http: ^0.13.5
   flutter_naver_login: ^1.7.0
   pedometer: ^3.0.0
+  flutter_local_notifications: ^12.0.3
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

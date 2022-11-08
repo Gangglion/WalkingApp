@@ -5,7 +5,7 @@ import 'package:pedometer/pedometer.dart';
 class ClassPedometer {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String status = '?';
+  String status = 'walking';
   String steps = '?';
 
   ClassPedometer() {}
@@ -27,7 +27,6 @@ class ClassPedometer {
   void onPedestrianStatusError(error) {
     print('onPedestrianStatusError: $error');
     status = 'Pedestrian Status not available';
-    print(status);
   }
 
   void onStepCountError(error) {
@@ -36,6 +35,7 @@ class ClassPedometer {
   }
 
   void initPlatformState() {
+    print('initPlatformState 에서 status의 현재 상태 : $status');
     _pedestrianStatusStream = Pedometer.pedestrianStatusStream;
     _pedestrianStatusStream
         .listen(onPedestrianStatusChanged)
