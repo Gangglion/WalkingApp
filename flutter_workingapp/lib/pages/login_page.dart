@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_workingapp/class/login_class.dart';
-import 'package:flutter_workingapp/pages/pedometer_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import '../widget/outline_circle_button.dart';
@@ -10,26 +9,6 @@ import 'home_page.dart';
 import 'package:flutter_workingapp/class/login_platform.dart';
 import 'dart:convert';
 import 'dart:io';
-
-void main() {
-  runApp(MyApp());
-}
-
-class AppStart extends StatelessWidget {
-  const AppStart({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
-    );
-  }
-}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -135,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 primary: Colors.blue.shade100),
-            child: const Text("로그인 없이 바로 시작하기!",
+            child: const Text("로그인 없이 바로 시작하기! - 임시",
                 style: TextStyle(color: Colors.black87)),
           ),
         ),

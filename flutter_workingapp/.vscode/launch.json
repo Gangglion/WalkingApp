@@ -4,11 +4,12 @@
     // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "flutter_workingapp",
             "request": "launch",
             "type": "dart",
-            "program":"lib/pages/login_page.dart"
+            "program":"lib/main.dart"
         },
         {
             "name": "flutter_workingapp (profile mode)",

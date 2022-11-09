@@ -6,6 +6,8 @@ import 'package:flutter_workingapp/widget/nomode_rowwidget.dart';
 import 'package:flutter_workingapp/widget/set_walkmode_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+enum WalkMode { NONE, SETWALK, JUSTWALK }
+
 class WalkSceen extends StatefulWidget {
   const WalkSceen({Key? key}) : super(key: key);
 
@@ -17,9 +19,19 @@ class _WalkSceenState extends State<WalkSceen> {
   late GoogleMapController mapController;
 
   final LatLng _center = const LatLng(45.521563, -122.677433);
-  int walkMode = 0; // 1은 걸음수 지정 산책 모드, 2는 일반 산책 모드 - 프로바이더 사용해서 관리
+  int walkMode = 0; // 1은 걸음수 지정 산책 모드, 2는 일반 산책 모드 - enum으로 관리 가능할듯
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+
+  WalkMode _state = WalkMode.NONE;
+  Widget _content() {
+    if (_state == WalkMode.SETWALK)
+      return setWalkMode(context);
+    else if (_state == WalkMode.JUSTWALK) {
+      return justWalkMode(context);
+    }
+    return noMode_rowWidget(context);
   }
 
   @override
@@ -42,57 +54,7 @@ class _WalkSceenState extends State<WalkSceen> {
               ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 130,
-                height: (MediaQuery.of(context).size.height -
-                        AppBar().preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.2,
-                margin: const EdgeInsets.only(top: 15.0, right: 25.0),
-                child: ElevatedButton(
-                    // 이미지 있는 버튼으로 변경
-                    onPressed: () {
-                      print("걸음수 지정 산책 모드 클릭");
-                      const SetWalkMode();
-                    },
-                    style: ElevatedButton.styleFrom(
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(40))),
-                        primary: Colors.blue.shade100),
-                    child: const Text("걸음수 지정 산책 모드",
-                        style: TextStyle(color: Colors.black87))),
-              ),
-              Container(
-                width: 130,
-                height: (MediaQuery.of(context).size.height -
-                        AppBar().preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.2,
-                margin: const EdgeInsets.only(left: 25.0, top: 15.0),
-                child: ElevatedButton(
-                    // 이미지 있는 버튼으로 변경
-                    onPressed: () {
-                      print("가벼운 산책 모드 클릭");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const JustWalkMode()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(40))),
-                        primary: Colors.blue.shade100),
-                    child: const Text("가벼운 산책 모드",
-                        style: TextStyle(color: Colors.black87))),
-              )
-            ],
-          ),
+          _content(),
         ],
       ),
     );
