@@ -17,8 +17,6 @@ class justWalkMode extends StatefulWidget {
 
 enum DataState {
   DATA_NOT_FETCHED,
-  FETCHING_DATA,
-  DATA_READY,
   NO_DATA,
   AUTH_NOT_GRANTED,
   STEPS_READY,
@@ -28,6 +26,12 @@ class _justWalkModeState extends State<justWalkMode> {
   DataState _state = DataState.DATA_NOT_FETCHED;
   int _nofSteps = 10;
   HealthFactory health = HealthFactory();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchStepData();
+  }
 
   Future fetchStepData() async {
     int? steps;
@@ -57,17 +61,27 @@ class _justWalkModeState extends State<justWalkMode> {
     }
   }
 
-  Widget _stepsFetched() {
-    return Text('Total number of steps: $_nofSteps');
+  Text _stepsFetched() {
+    return Text('걸음수 : $_nofSteps');
+  }
+
+  Widget _contentNoData() {
+    return const Text('측정된 걸음수가 없습니다');
+  }
+
+  Widget _contentNotFetched() {
+    return const Text('걸음수를 가져오고 있습니다...');
+  }
+
+  Widget _authorizationNotGranted() {
+    return Text('Authorization not given. '
+        'For Android please check your OAUTH2 client ID is correct in Google Developer Console. '
+        'For iOS check your permissions in Apple Health.');
   }
 
   Widget _content() {
-    if (_state == DataState.DATA_READY)
-      return _contentDataReady();
-    else if (_state == DataState.NO_DATA)
+    if (_state == DataState.NO_DATA)
       return _contentNoData();
-    else if (_state == DataState.FETCHING_DATA)
-      return _contentFetchingData();
     else if (_state == DataState.AUTH_NOT_GRANTED)
       return _authorizationNotGranted();
     else if (_state == DataState.STEPS_READY) return _stepsFetched();
@@ -80,13 +94,15 @@ class _justWalkModeState extends State<justWalkMode> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Container(child: waitWalking()),
-        SizedBox(height: 10),
-        fetchStepData();
-        SizedBox(height: 20),
+        const SizedBox(height: 10),
+        _content(),
+        const SizedBox(height: 20),
         FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             backgroundColor: Colors.red.shade300,
             child: Icon(Icons.stop_circle))
       ],

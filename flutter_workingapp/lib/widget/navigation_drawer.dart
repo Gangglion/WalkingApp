@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 
-class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+class NavigationDrawer extends StatefulWidget {
+  const NavigationDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Drawer(
-        child: SingleChildScrollView(
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            buildHeader(context),
-            buildMenuItems(context),
-          ]),
-    ));
-  }
+  State<NavigationDrawer> createState() => _NavigationDrawerState();
+}
+
+class _NavigationDrawerState extends State<NavigationDrawer> {
+  bool _gpsEnable = true;
 
   Widget buildHeader(BuildContext context) {
     return Container(
@@ -47,16 +41,41 @@ class NavigationDrawer extends StatelessWidget {
           onTap: () {},
         ),
         ListTile(
-          leading: const Icon(Icons.logout_outlined),
+          leading: const Icon(Icons.gps_fixed),
           title: const Text('GPS기록 변경'),
-          onTap: () {},
+          trailing: Switch(
+            value: _gpsEnable,
+            onChanged: (value) {
+              setState(() {
+                _gpsEnable = value;
+              });
+            },
+          ),
         ),
         ListTile(
           leading: const Icon(Icons.home_outlined),
           title: const Text('기록 초기화'),
           onTap: () {},
         ),
+        ListTile(
+          leading: const Icon(Icons.directions_walk),
+          title: const Text('목표 걸음수 설정'),
+          onTap: () {},
+        ),
       ],
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+        child: SingleChildScrollView(
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            buildHeader(context),
+            buildMenuItems(context),
+          ]),
+    ));
   }
 }
