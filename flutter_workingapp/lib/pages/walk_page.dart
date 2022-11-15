@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_workingapp/widget/just_walkmode_widget.dart';
-import 'package:flutter_workingapp/widget/nomode_widget.dart';
 import 'package:flutter_workingapp/widget/set_walkmode_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

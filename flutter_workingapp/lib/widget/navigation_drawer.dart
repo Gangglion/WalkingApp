@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_workingapp/widget/setwalk_picker.dart';
 
 class NavigationDrawer extends StatefulWidget {
   const NavigationDrawer({super.key});
@@ -60,7 +61,14 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
         ListTile(
           leading: const Icon(Icons.directions_walk),
           title: const Text('목표 걸음수 설정'),
-          onTap: () {},
+          onTap: () {
+            showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (BuildContext context) {
+                  return const SetWalkPicker();
+                });
+          },
         ),
       ],
     );
