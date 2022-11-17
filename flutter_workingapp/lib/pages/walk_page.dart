@@ -94,7 +94,7 @@ class _WalkSceenState extends State<WalkSceen> {
               ],
             )
           ] else if (_state == WalkMode.SETWALK) ...[
-            setWalkMode(context)
+            const setWalkMode()
           ] else if (_state == WalkMode.JUSTWALK) ...[
             const justWalkMode()
           ]

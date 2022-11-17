@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/Material.dart';
+import 'package:flutter_workingapp/class/walk_count.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class SetWalkPicker extends StatefulWidget {
@@ -14,6 +15,7 @@ class _SetWalkPickerState extends State<SetWalkPicker> {
   int _currentValue = 5;
   int minValue = 0;
   int maxValue = 10;
+  WalkCount walkCount = WalkCount();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,10 +45,12 @@ class _SetWalkPickerState extends State<SetWalkPicker> {
             onChanged: (value) {
               setState(() {
                 _currentValue = value;
+
+                walkCount.setWalk(_currentValue);
               });
             },
           ),
-        )
+        ),
       ],
     );
   }
