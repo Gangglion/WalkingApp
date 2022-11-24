@@ -13,7 +13,7 @@ class SetWalkPicker extends StatefulWidget {
 
 class _SetWalkPickerState extends State<SetWalkPicker> {
   int _currentValue = 5;
-  int minValue = 0;
+  int minValue = 1;
   int maxValue = 10;
   WalkCount walkCount = WalkCount();
   @override

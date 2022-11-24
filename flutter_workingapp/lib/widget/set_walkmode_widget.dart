@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_workingapp/class/walk_count.dart';
+import 'package:flutter_workingapp/pages/home_page.dart';
 import 'package:health/health.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,22 +29,51 @@ class _setWalkModeState extends State<setWalkMode> {
   late Timer _timer;
   bool _isCounting = false;
   int? startSteps;
-  SharedPreferences setWalk = WalkCount.setWalkPref;
+  late SharedPreferences setWalk;
   late int setWalkValue;
   @override
   void initState() {
     super.initState();
+    setWalk = WalkCount.setWalkPref;
     setWalkValue = setWalk.getInt('settingWalk')!;
-    getStartStepData(); // 시작했을때 걸음 수 가져옴
-    _isCounting = !_isCounting;
-    if (_isCounting) {
-      _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-        setState(() {
-          fetchStepData(); // 실시간으로 걸으면서 걸음 수 가져옴
-        });
+    if (setWalkValue == 0) {
+      setState(() {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Column(
+                  children: const <Widget>[Text('경고')],
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const <Widget>[
+                    Text('걷고자 하는 걸음수가 지정되지 않았습니다. 좌측 상단 설정화면에서 설정해주세요!')
+                  ],
+                ),
+                actions: <Widget>[
+                  ElevatedButton(
+                    child: Text("확인"),
+                    onPressed: () {
+                      const HomePage();
+                    },
+                  ),
+                ],
+              );
+            });
       });
     } else {
-      _timer.cancel();
+      getStartStepData(); // 시작했을때 걸음 수 가져옴
+      _isCounting = !_isCounting;
+      if (_isCounting) {
+        _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+          setState(() {
+            fetchStepData(); // 실시간으로 걸으면서 걸음 수 가져옴
+          });
+        });
+      } else {
+        _timer.cancel();
+      }
     }
   }
 
@@ -96,6 +126,35 @@ class _setWalkModeState extends State<setWalkMode> {
       setState(() {
         _nofSteps = (steps == null) ? 0 : (steps - startSteps!);
         _state = (steps == null) ? DataState.NO_DATA : DataState.STEPS_READY;
+        if (_nofSteps == setWalkValue) {
+          _timer.cancel();
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Column(
+                    children: const <Widget>[Text('완료')],
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text('축하합니다! 목표 걸음수 만큼 산책을 완료했습니다!\n걸음수 : $_nofSteps')
+                    ],
+                  ),
+                  actions: <Widget>[
+                    ElevatedButton(
+                      child: const Text("확인"),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()));
+                      },
+                    ),
+                  ],
+                );
+              });
+        }
       });
     } else {
       print("Authorization not granted - error in authorization");

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_workingapp/class/walkcount_model.dart';
+import 'package:flutter_workingapp/pages/walk_page.dart';
 import 'package:flutter_workingapp/widget/loading_widget.dart';
 import 'package:health/health.dart';
+import 'package:intl/intl.dart';
 import 'dart:async';
 
 import '../pages/home_page.dart';
@@ -147,12 +150,39 @@ class _justWalkModeState extends State<justWalkMode> {
         const SizedBox(height: 20),
         FloatingActionButton(
             onPressed: () {
+              var now = new DateTime.now();
+              String nowDate = DateFormat('yy-MM-dd/HH:MM:ss').format(now);
+              final fido = WalkcountModel(date: nowDate, stepValue: _nofSteps);
               _timer.cancel();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Column(
+                        children: const <Widget>[Text('완료')],
+                      ),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text('산책을 종료합니다!\n걸음수 : $_nofSteps')
+                        ],
+                      ),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          child: Text("확인"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomePage()));
+                          },
+                        ),
+                      ],
+                    );
+                  });
             },
             backgroundColor: Colors.red.shade300,
-            child: Icon(Icons.stop_circle))
+            child: const Icon(Icons.stop_circle))
       ],
     );
   }
