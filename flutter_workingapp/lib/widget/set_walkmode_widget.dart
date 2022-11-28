@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_workingapp/class/walkPref_class.dart';
 import 'package:flutter_workingapp/pages/home_page.dart';
 import 'package:health/health.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../class/StepValue_class.dart';
+import '../class/datebaseHelper_class.dart';
 import 'loading_widget.dart';
 
 class setWalkMode extends StatefulWidget {
@@ -31,39 +34,21 @@ class _setWalkModeState extends State<setWalkMode> {
   int? startSteps;
   late SharedPreferences setWalk;
   late int setWalkValue;
+  late bool requested;
   @override
   void initState() {
     super.initState();
-    setWalk = WalkCount.setWalkPref;
-    setWalkValue = setWalk.getInt('settingWalk')!;
-    if (setWalkValue == 0) {
-      setState(() {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Column(
-                  children: const <Widget>[Text('경고')],
-                ),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
-                    Text('걷고자 하는 걸음수가 지정되지 않았습니다. 좌측 상단 설정화면에서 설정해주세요!')
-                  ],
-                ),
-                actions: <Widget>[
-                  ElevatedButton(
-                    child: Text("확인"),
-                    onPressed: () {
-                      const HomePage();
-                    },
-                  ),
-                ],
-              );
-            });
-      });
-    } else {
-      getStartStepData(); // 시작했을때 걸음 수 가져옴
+    try {
+      setWalk = WalkCount.setWalkPref;
+      setWalkValue = setWalk.getInt('settingWalk')!;
+    } catch (e) {
+      setWalkValue = 0;
+    }
+
+    print("기본 걸음수 : $setWalkValue");
+    // 걸음수 수집 시작
+    getStartStepData(); // 시작했을때 걸음 수 가져옴
+    if (setWalkValue != 0) {
       _isCounting = !_isCounting;
       if (_isCounting) {
         _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
@@ -90,7 +75,7 @@ class _setWalkModeState extends State<setWalkMode> {
     final now = DateTime.now();
     final midnight = DateTime(now.year, now.month, now.day);
 
-    bool requested = await health.requestAuthorization([HealthDataType.STEPS]);
+    requested = await health.requestAuthorization([HealthDataType.STEPS]);
 
     if (requested) {
       try {
@@ -98,8 +83,39 @@ class _setWalkModeState extends State<setWalkMode> {
       } catch (error) {
         print("Caught exception in getTotalStepsInInterval: $error");
       }
-
       print('Start number of steps: $startSteps');
+      setState(() {
+        if (setWalkValue == 0) {
+          print('다이어로그 띄워짐');
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Column(
+                    children: const <Widget>[Text('경고')],
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const <Widget>[
+                      Text('걷고자 하는 걸음수가 지정되지 않았습니다. 좌측 상단 설정화면에서 설정해주세요!')
+                    ],
+                  ),
+                  actions: <Widget>[
+                    ElevatedButton(
+                      child: Text("확인"),
+                      onPressed: () {
+                        print('확인버튼 누름');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()));
+                      },
+                    ),
+                  ],
+                );
+              });
+        }
+      });
     } else {
       print("Authorization not granted - error in authorization");
     }
@@ -111,8 +127,6 @@ class _setWalkModeState extends State<setWalkMode> {
     // get steps for today (i.e., since midnight)
     final now = DateTime.now();
     final midnight = DateTime(now.year, now.month, now.day);
-
-    bool requested = await health.requestAuthorization([HealthDataType.STEPS]);
 
     if (requested) {
       try {
@@ -145,6 +159,12 @@ class _setWalkModeState extends State<setWalkMode> {
                     ElevatedButton(
                       child: const Text("확인"),
                       onPressed: () {
+                        var now = new DateTime.now();
+                        String nowDate =
+                            DateFormat('yy-MM-dd/HH:MM:ss').format(now);
+                        StepValue stepValue =
+                            StepValue(dates: nowDate, step: _nofSteps);
+                        DatabaseHelper.instance.add(stepValue);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

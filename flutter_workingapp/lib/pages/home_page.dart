@@ -28,9 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('main'),
-      ),
+      appBar: AppBar(),
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const [

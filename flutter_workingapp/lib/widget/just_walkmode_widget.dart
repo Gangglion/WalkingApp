@@ -9,12 +9,6 @@ import '../class/StepValue_class.dart';
 import '../class/datebaseHelper_class.dart';
 import '../pages/home_page.dart';
 
-// Widget justWalkMode(dynamic context) {
-//   return Column(
-//     mainAxisAlignment: MainAxisAlignment.center,
-//     children: [SizedBox(height: 20), Container(child: waitWalking()),Text("현재 걸음 수 : ")],
-//   );
-// }
 class justWalkMode extends StatefulWidget {
   const justWalkMode({super.key});
 
@@ -150,7 +144,7 @@ class _justWalkModeState extends State<justWalkMode> {
         const SizedBox(height: 20),
         FloatingActionButton(
             onPressed: () {
-              var now = new DateTime.now();
+              var now = DateTime.now();
               String nowDate = DateFormat('yy-MM-dd/HH:MM:ss').format(now);
               _timer.cancel();
               showDialog(
