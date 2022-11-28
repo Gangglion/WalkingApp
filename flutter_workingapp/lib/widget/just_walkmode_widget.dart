@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_workingapp/class/walkcount_model.dart';
 import 'package:flutter_workingapp/pages/walk_page.dart';
 import 'package:flutter_workingapp/widget/loading_widget.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
+import 'package:sqflite/sqflite.dart';
 import 'dart:async';
-
+import '../class/StepValue_class.dart';
+import '../class/datebaseHelper_class.dart';
 import '../pages/home_page.dart';
 
 // Widget justWalkMode(dynamic context) {
@@ -35,6 +36,7 @@ class _justWalkModeState extends State<justWalkMode> {
   late Timer _timer;
   bool _isCounting = false;
   int? startSteps;
+  late bool requested;
   @override
   void initState() {
     super.initState();
@@ -64,7 +66,7 @@ class _justWalkModeState extends State<justWalkMode> {
     final now = DateTime.now();
     final midnight = DateTime(now.year, now.month, now.day);
 
-    bool requested = await health.requestAuthorization([HealthDataType.STEPS]);
+    requested = await health.requestAuthorization([HealthDataType.STEPS]);
 
     if (requested) {
       try {
@@ -85,8 +87,6 @@ class _justWalkModeState extends State<justWalkMode> {
     // get steps for today (i.e., since midnight)
     final now = DateTime.now();
     final midnight = DateTime(now.year, now.month, now.day);
-
-    bool requested = await health.requestAuthorization([HealthDataType.STEPS]);
 
     if (requested) {
       try {
@@ -152,7 +152,6 @@ class _justWalkModeState extends State<justWalkMode> {
             onPressed: () {
               var now = new DateTime.now();
               String nowDate = DateFormat('yy-MM-dd/HH:MM:ss').format(now);
-              final fido = WalkcountModel(date: nowDate, stepValue: _nofSteps);
               _timer.cancel();
               showDialog(
                   context: context,
@@ -171,6 +170,9 @@ class _justWalkModeState extends State<justWalkMode> {
                         ElevatedButton(
                           child: Text("확인"),
                           onPressed: () {
+                            StepValue stepValue =
+                                StepValue(dates: nowDate, step: _nofSteps);
+                            DatabaseHelper.instance.add(stepValue);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

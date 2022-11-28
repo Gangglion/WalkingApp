@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/Material.dart';
-import 'package:flutter_workingapp/class/walk_count.dart';
+import 'package:flutter_workingapp/class/walkPref_class.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class SetWalkPicker extends StatefulWidget {

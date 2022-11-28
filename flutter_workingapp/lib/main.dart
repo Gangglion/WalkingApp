@@ -4,13 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 void main() async {
-  final database =
-      openDatabase(join(await getDatabasesPath(), 'walk_datebase.db'),
-          onCreate: (db, version) {
-    return db.execute(
-      "CREATE TABLE IF NOT EXIST WALKTABLE(date TEXT PRIMARY KEY, STEPVALUE INTEGER)",
-    );
-  }, version: 1);
+  WidgetsFlutterBinding.ensureInitialized;
   runApp(const AppStart());
 }
 

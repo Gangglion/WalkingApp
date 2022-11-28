@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_workingapp/class/walk_count.dart';
+import 'package:flutter_workingapp/class/walkPref_class.dart';
 import 'package:flutter_workingapp/pages/home_page.dart';
 import 'package:health/health.dart';
 import 'package:shared_preferences/shared_preferences.dart';
