@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_workingapp/widget/just_walkmode_widget.dart';
 import 'package:flutter_workingapp/widget/set_walkmode_widget.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 enum WalkMode { NONE, SETWALK, JUSTWALK }
@@ -15,9 +16,27 @@ class WalkSceen extends StatefulWidget {
 }
 
 class _WalkSceenState extends State<WalkSceen> {
+  List<Marker> _markers = [];
+  // 37.46342905,126.80314663
+  late LatLng _center;
+  @override
+  Future<void> initState() async {
+    super.initState();
+    try {
+      // 여기서 에러를 뿜는데...!! 권한체크를 안해주었음. 퍼미션 체크하는 코드 앱 시작 전 main에서 해보자
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      _center = LatLng(position.latitude, position.longitude);
+      _markers.add(Marker(
+          markerId: MarkerId("now"),
+          draggable: false,
+          position: LatLng(position.latitude, position.longitude)));
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   late GoogleMapController mapController;
-// 37.46342905,126.80314663
-  final LatLng _center = const LatLng(37.463429, 126.803146);
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
@@ -38,6 +57,7 @@ class _WalkSceenState extends State<WalkSceen> {
             margin: const EdgeInsets.all(10),
             child: GoogleMap(
               onMapCreated: _onMapCreated,
+              markers: Set.from(_markers),
               initialCameraPosition: CameraPosition(
                 target: _center,
                 zoom: 11.0,
