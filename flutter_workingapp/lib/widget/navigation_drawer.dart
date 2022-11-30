@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_workingapp/widget/setwalk_picker.dart';
 
+import '../class/datebaseHelper_class.dart';
+
 class NavigationDrawer extends StatefulWidget {
   const NavigationDrawer({super.key});
 
@@ -56,7 +58,31 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
         ListTile(
           leading: const Icon(Icons.home_outlined),
           title: const Text('기록 초기화'),
-          onTap: () {},
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Column(
+                      children: const <Widget>[Text('기록 삭제')],
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const <Widget>[Text('정말 데이터를 삭제하시겠습니까?')],
+                    ),
+                    actions: <Widget>[
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                        child: const Text("삭제"),
+                        onPressed: () {
+                          DatabaseHelper.instance.delete();
+                        },
+                      ),
+                    ],
+                  );
+                });
+          },
         ),
         ListTile(
           leading: const Icon(Icons.directions_walk),

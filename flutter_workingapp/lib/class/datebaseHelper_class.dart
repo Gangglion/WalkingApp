@@ -39,4 +39,9 @@ class DatabaseHelper {
     Database db = await instance.database;
     return await db.insert('Walk', stepValue.toMap());
   }
+
+  Future<void> delete() async {
+    Database db = await instance.database;
+    await db.delete('Walk');
+  }
 }
