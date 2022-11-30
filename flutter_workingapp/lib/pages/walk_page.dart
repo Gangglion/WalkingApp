@@ -58,8 +58,7 @@ class _WalkSceenState extends State<WalkSceen> {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    return await Geolocator.getCurrentPosition();
   }
 
   late GoogleMapController mapController;
@@ -112,8 +111,8 @@ class _WalkSceenState extends State<WalkSceen> {
                     ),
                   );
                 } else {
-                  // 여기서 에러를 뿜는데...!! 권한체크를 안해주었음. 퍼미션 체크하는 코드 앱 시작 전 main에서 해보자
                   Position position = snapshot.data;
+                  print('Data : $position');
                   _center = LatLng(position.latitude, position.longitude);
                   _markers.add(Marker(
                       markerId: const MarkerId("now"),
