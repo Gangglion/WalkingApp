@@ -143,7 +143,7 @@ class _justWalkModeState extends State<justWalkMode> {
         FloatingActionButton(
             onPressed: () {
               var now = DateTime.now();
-              String nowDate = DateFormat('yy-MM-dd/HH:MM:ss').format(now);
+              String nowDate = DateFormat('yy-MM-dd/HH:mm:ss').format(now);
               _timer.cancel();
               showDialog(
                   context: context,

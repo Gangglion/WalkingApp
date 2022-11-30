@@ -20,52 +20,33 @@ class WalkSceen extends StatefulWidget {
 class _WalkSceenState extends State<WalkSceen> {
   List<Marker> _markers = [];
   // 37.46342905,126.80314663
-  LatLng _center = LatLng(37.46342905, 126.80314663);
+  late LatLng _center;
+  late StreamSubscription<Position> positionStream;
   late Timer _timer;
+
   @override
   void initState() {
     super.initState();
-    if (_state == WalkMode.SETWALK || _state == WalkMode.JUSTWALK) {
-      _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-        _determinePosition();
-      });
-    }
   }
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
-
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
       return Future.error('Location services are disabled.');
     }
-
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
         return Future.error('Location permissions are denied');
       }
     }
-
     if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
   }
 
@@ -86,6 +67,7 @@ class _WalkSceenState extends State<WalkSceen> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 print('noData');
                 if (snapshot.hasData == false) {
+                  _center = const LatLng(37.46342905, 126.80314663);
                   return Container(
                     width: double.infinity,
                     height: (MediaQuery.of(context).size.height -
@@ -93,16 +75,11 @@ class _WalkSceenState extends State<WalkSceen> {
                             MediaQuery.of(context).padding.top) *
                         0.6,
                     margin: const EdgeInsets.all(10),
-                    child: GoogleMap(
-                      onMapCreated: _onMapCreated,
-                      initialCameraPosition: CameraPosition(
-                        target: _center,
-                        zoom: 17.0,
-                      ),
-                    ),
+                    child: const Text('가져온 현재 위치 정보가 없습니다.'),
                   );
                 } else if (snapshot.hasError) {
                   print('error');
+                  _center = const LatLng(37.46342905, 126.80314663);
                   return Container(
                     width: double.infinity,
                     height: (MediaQuery.of(context).size.height -
@@ -110,13 +87,7 @@ class _WalkSceenState extends State<WalkSceen> {
                             MediaQuery.of(context).padding.top) *
                         0.6,
                     margin: const EdgeInsets.all(10),
-                    child: GoogleMap(
-                      onMapCreated: _onMapCreated,
-                      initialCameraPosition: CameraPosition(
-                        target: _center,
-                        zoom: 17.0,
-                      ),
-                    ),
+                    child: const Text('위치 정보를 가져오는 중 에러가 발생했습니다.'),
                   );
                 } else {
                   Position position = snapshot.data;

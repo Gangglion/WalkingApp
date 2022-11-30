@@ -161,7 +161,7 @@ class _setWalkModeState extends State<setWalkMode> {
                       onPressed: () {
                         var now = new DateTime.now();
                         String nowDate =
-                            DateFormat('yy-MM-dd/HH:MM:ss').format(now);
+                            DateFormat('yy-MM-dd/HH:mm:ss').format(now);
                         StepValue stepValue =
                             StepValue(dates: nowDate, step: _nofSteps);
                         DatabaseHelper.instance.add(stepValue);
