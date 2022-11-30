@@ -16,7 +16,7 @@ class AppStart extends StatelessWidget {
     return MaterialApp(
       title: 'WalkingApp',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
       home: const LoginPage(),

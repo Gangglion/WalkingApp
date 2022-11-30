@@ -15,7 +15,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
 
   Widget buildHeader(BuildContext context) {
     return Container(
-        color: Colors.blue.shade700,
+        color: Colors.green,
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top,
           bottom: 24,
@@ -77,6 +77,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                         child: const Text("삭제"),
                         onPressed: () {
                           DatabaseHelper.instance.delete();
+                          Navigator.pop(context);
                         },
                       ),
                     ],

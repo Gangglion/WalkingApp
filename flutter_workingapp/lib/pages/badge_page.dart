@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class BadgeSceen extends StatelessWidget {
   const BadgeSceen({super.key});
-
+  final int stepVal = 100;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class BadgeSceen extends StatelessWidget {
                         child: const Card(
                           shape: CircleBorder(side: BorderSide(width: 5.0)),
                           elevation: 4.0,
-                          color: Colors.black26,
+                          color: Colors.yellow,
                         ),
                       ),
                     ]

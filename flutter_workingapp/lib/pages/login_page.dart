@@ -33,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         body: Column(
       children: <Widget>[
+        const SizedBox(height: 80),
         Container(
           width: 1000,
           margin: const EdgeInsets.only(left: 40, top: 100),
@@ -52,52 +53,60 @@ class _LoginPageState extends State<LoginPage> {
         ),
         Container(
             margin: const EdgeInsets.only(top: 80),
-            child: Text("로그인 하고 활동을 기록하세요!",
+            child: Text("산책할 준비가 되셨나요?",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20, color: Colors.teal.shade600))),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 150, right: 20),
-              child: OutlineCircleButton(
-                  radius: 60.0,
-                  borderSize: 0.5,
-                  onTap: () async {
-                    print("구글 로그인");
-                    loginObj.signInWithGoogle();
-                    setState(() {
-                      loginPlatform = LoginPlatform.google;
-                    });
-                  },
-                  child: Image.asset("images/icon/google.png")),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 150, right: 20),
-              child: OutlineCircleButton(
-                  radius: 60.0,
-                  borderSize: 0.5,
-                  onTap: () async {
-                    print("네이버 로그인");
-                    loginObj.signInWithNaver();
-                    setState(() {
-                      loginPlatform = LoginPlatform.naver;
-                    });
-                  },
-                  child: Image.asset("images/icon/naver.png")),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 150),
-              child: OutlineCircleButton(
-                  radius: 60.0,
-                  borderSize: 0.5,
-                  onTap: () async {
-                    print("카카오 로그인");
-                  },
-                  child: Image.asset("images/icon/kakao.png")),
-            ),
-          ],
+        Container(
+            margin: const EdgeInsets.only(top: 30),
+            child: Text("아래 버튼을 눌러 지금 바로 시작하세요!",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, color: Colors.teal.shade600))),
+        const SizedBox(
+          height: 200,
         ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Container(
+        //       margin: const EdgeInsets.only(top: 150, right: 20),
+        //       child: OutlineCircleButton(
+        //           radius: 60.0,
+        //           borderSize: 0.5,
+        //           onTap: () async {
+        //             print("구글 로그인");
+        //             loginObj.signInWithGoogle();
+        //             setState(() {
+        //               loginPlatform = LoginPlatform.google;
+        //             });
+        //           },
+        //           child: Image.asset("images/icon/google.png")),
+        //     ),
+        //     Container(
+        //       margin: const EdgeInsets.only(top: 150, right: 20),
+        //       child: OutlineCircleButton(
+        //           radius: 60.0,
+        //           borderSize: 0.5,
+        //           onTap: () async {
+        //             print("네이버 로그인");
+        //             loginObj.signInWithNaver();
+        //             setState(() {
+        //               loginPlatform = LoginPlatform.naver;
+        //             });
+        //           },
+        //           child: Image.asset("images/icon/naver.png")),
+        //     ),
+        //     Container(
+        //       margin: const EdgeInsets.only(top: 150),
+        //       child: OutlineCircleButton(
+        //           radius: 60.0,
+        //           borderSize: 0.5,
+        //           onTap: () async {
+        //             print("카카오 로그인");
+        //           },
+        //           child: Image.asset("images/icon/kakao.png")),
+        //     ),
+        //   ],
+        // ),
         Container(
           width: 200,
           height: 55,
@@ -114,8 +123,8 @@ class _LoginPageState extends State<LoginPage> {
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 primary: Colors.blue.shade100),
-            child: const Text("로그인 없이 바로 시작하기! - 임시",
-                style: TextStyle(color: Colors.black87)),
+            child: const Text("산책하러 떠나기",
+                style: TextStyle(color: Colors.black87, fontSize: 30)),
           ),
         ),
       ],

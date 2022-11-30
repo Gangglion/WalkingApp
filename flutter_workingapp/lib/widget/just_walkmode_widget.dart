@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_workingapp/pages/walk_page.dart';
 import 'package:flutter_workingapp/widget/loading_widget.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
-import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import '../class/StepValue_class.dart';
 import '../class/datebaseHelper_class.dart';
@@ -37,7 +35,7 @@ class _justWalkModeState extends State<justWalkMode> {
     getStartStepData(); // 시작했을때 걸음 수 가져옴
     _isCounting = !_isCounting;
     if (_isCounting) {
-      _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      _timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
         setState(() {
           fetchStepData(); // 실시간으로 걸으면서 걸음 수 가져옴
         });

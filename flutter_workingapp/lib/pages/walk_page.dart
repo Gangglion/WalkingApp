@@ -1,5 +1,7 @@
 // 산책 화면
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_workingapp/widget/just_walkmode_widget.dart';
 import 'package:flutter_workingapp/widget/set_walkmode_widget.dart';
@@ -19,9 +21,15 @@ class _WalkSceenState extends State<WalkSceen> {
   List<Marker> _markers = [];
   // 37.46342905,126.80314663
   LatLng _center = LatLng(37.46342905, 126.80314663);
+  late Timer _timer;
   @override
   void initState() {
     super.initState();
+    if (_state == WalkMode.SETWALK || _state == WalkMode.JUSTWALK) {
+      _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+        _determinePosition();
+      });
+    }
   }
 
   Future<Position> _determinePosition() async {
@@ -89,7 +97,7 @@ class _WalkSceenState extends State<WalkSceen> {
                       onMapCreated: _onMapCreated,
                       initialCameraPosition: CameraPosition(
                         target: _center,
-                        zoom: 11.0,
+                        zoom: 17.0,
                       ),
                     ),
                   );
@@ -106,7 +114,7 @@ class _WalkSceenState extends State<WalkSceen> {
                       onMapCreated: _onMapCreated,
                       initialCameraPosition: CameraPosition(
                         target: _center,
-                        zoom: 11.0,
+                        zoom: 17.0,
                       ),
                     ),
                   );
@@ -130,7 +138,7 @@ class _WalkSceenState extends State<WalkSceen> {
                       markers: Set.from(_markers),
                       initialCameraPosition: CameraPosition(
                         target: _center,
-                        zoom: 11.0,
+                        zoom: 17.0,
                       ),
                     ),
                   );
