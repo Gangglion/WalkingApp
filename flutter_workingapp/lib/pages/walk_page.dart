@@ -19,14 +19,24 @@ class WalkSceen extends StatefulWidget {
 
 class _WalkSceenState extends State<WalkSceen> {
   List<Marker> _markers = [];
-  // 37.46342905,126.80314663
+  // Default Position : 37.46342905,126.80314663
   late LatLng _center;
-  late StreamSubscription<Position> positionStream;
-  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  StreamSubscription<Position> _positionStream() {
+    return Geolocator.getPositionStream().listen((Position? position) {
+      // print(position == null
+      //     ? 'Unknown'
+      //     : '${position.latitude.toString()}, ${position.longitude.toString()}');
+      _markers.add(Marker(
+          markerId: const MarkerId("now"),
+          draggable: false,
+          position: LatLng(position!.latitude, position.longitude)));
+    });
   }
 
   Future<Position> _determinePosition() async {
@@ -98,21 +108,40 @@ class _WalkSceenState extends State<WalkSceen> {
                       draggable: false,
                       position: LatLng(position.latitude, position.longitude)));
                   return Container(
-                    width: double.infinity,
-                    height: (MediaQuery.of(context).size.height -
-                            AppBar().preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.6,
-                    margin: const EdgeInsets.all(10),
-                    child: GoogleMap(
-                      onMapCreated: _onMapCreated,
-                      markers: Set.from(_markers),
-                      initialCameraPosition: CameraPosition(
-                        target: _center,
-                        zoom: 17.0,
-                      ),
-                    ),
-                  );
+                      width: double.infinity,
+                      height: (MediaQuery.of(context).size.height -
+                              AppBar().preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.6,
+                      margin: const EdgeInsets.all(10),
+                      // child: GoogleMap(
+                      //   onMapCreated: _onMapCreated,
+                      //   markers: Set.from(_markers),
+                      //   initialCameraPosition: CameraPosition(
+                      //     target: _center,
+                      //     zoom: 17.0,
+                      //   ),
+                      // ),
+                      child: StreamBuilder(
+                        stream: Geolocator.getPositionStream(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          Position livePosition = snapshot.data;
+                          _markers.add(Marker(
+                              markerId: const MarkerId("now"),
+                              draggable: false,
+                              position: LatLng(livePosition.latitude,
+                                  livePosition.longitude)));
+                          return GoogleMap(
+                            onMapCreated: _onMapCreated,
+                            markers: Set.from(_markers),
+                            initialCameraPosition: CameraPosition(
+                              target: _center,
+                              zoom: 17.0,
+                            ),
+                          );
+                        },
+                      ));
                 }
               }),
           if (_state == WalkMode.NONE) ...[
