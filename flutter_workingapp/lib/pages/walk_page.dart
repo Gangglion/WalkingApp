@@ -27,18 +27,6 @@ class _WalkSceenState extends State<WalkSceen> {
     super.initState();
   }
 
-  StreamSubscription<Position> _positionStream() {
-    return Geolocator.getPositionStream().listen((Position? position) {
-      // print(position == null
-      //     ? 'Unknown'
-      //     : '${position.latitude.toString()}, ${position.longitude.toString()}');
-      _markers.add(Marker(
-          markerId: const MarkerId("now"),
-          draggable: false,
-          position: LatLng(position!.latitude, position.longitude)));
-    });
-  }
-
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
