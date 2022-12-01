@@ -126,20 +126,40 @@ class _WalkSceenState extends State<WalkSceen> {
                         stream: Geolocator.getPositionStream(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
-                          Position livePosition = snapshot.data;
-                          _markers.add(Marker(
-                              markerId: const MarkerId("now"),
-                              draggable: false,
-                              position: LatLng(livePosition.latitude,
-                                  livePosition.longitude)));
-                          return GoogleMap(
-                            onMapCreated: _onMapCreated,
-                            markers: Set.from(_markers),
-                            initialCameraPosition: CameraPosition(
-                              target: _center,
-                              zoom: 17.0,
-                            ),
-                          );
+                          if (snapshot.hasData == false) {
+                            return GoogleMap(
+                              onMapCreated: _onMapCreated,
+                              markers: Set.from(_markers),
+                              initialCameraPosition: CameraPosition(
+                                target: _center,
+                                zoom: 17.0,
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return GoogleMap(
+                              onMapCreated: _onMapCreated,
+                              markers: Set.from(_markers),
+                              initialCameraPosition: CameraPosition(
+                                target: _center,
+                                zoom: 17.0,
+                              ),
+                            );
+                          } else {
+                            Position livePosition = snapshot.data;
+                            _markers.add(Marker(
+                                markerId: const MarkerId("now"),
+                                draggable: false,
+                                position: LatLng(livePosition.latitude,
+                                    livePosition.longitude)));
+                            return GoogleMap(
+                              onMapCreated: _onMapCreated,
+                              markers: Set.from(_markers),
+                              initialCameraPosition: CameraPosition(
+                                target: _center,
+                                zoom: 17.0,
+                              ),
+                            );
+                          }
                         },
                       ));
                 }
