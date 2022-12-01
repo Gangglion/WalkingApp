@@ -21,6 +21,7 @@ class _WalkSceenState extends State<WalkSceen> {
   List<Marker> _markers = [];
   // Default Position : 37.46342905,126.80314663
   late LatLng _center;
+  int markerCount = 0;
 
   @override
   void initState() {
@@ -135,10 +136,11 @@ class _WalkSceenState extends State<WalkSceen> {
                           } else {
                             Position livePosition = snapshot.data;
                             _markers.add(Marker(
-                                markerId: const MarkerId("now"),
+                                markerId: MarkerId(markerCount.toString()),
                                 draggable: false,
                                 position: LatLng(livePosition.latitude,
                                     livePosition.longitude)));
+                            markerCount++;
                             return GoogleMap(
                               onMapCreated: _onMapCreated,
                               markers: Set.from(_markers),
